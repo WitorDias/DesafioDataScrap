@@ -9,6 +9,7 @@ public class Main {
         ColetarDadosInfomoney executar = new ColetarDadosInfomoney();
         Set<String> conteudoSelenium = executar.coletarLinksDasNoticias(SeleniumUtil.pegarDadosColetadosPeloSelenium());
         executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);
+        //merge efetuado
 
     }
 }
