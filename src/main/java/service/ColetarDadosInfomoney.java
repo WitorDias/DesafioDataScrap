@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ColetarDadosInfomoney {
-    public Set<String> obterLinksENoticias(String seleniumArquivo){
+    public Set<String> coletarLinks(String seleniumArquivo){
         Set<String> linksList = new LinkedHashSet<>();
         Document doc = Jsoup.parse(seleniumArquivo);
         FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.flex.flex-col.gap-3.p-4")); //div tempo real
@@ -25,7 +25,6 @@ public class ColetarDadosInfomoney {
                 linksList.add(href);
             }
         }
-
         String filtro = "https://www.infomoney.com.br/mercados/";
         linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro));
         return linksList;
