@@ -8,7 +8,7 @@ public class Main {
 
         /*ColetarDadosInfomoney executar = new ColetarDadosInfomoney();
         Set<String> conteudoSelenium = executar.obterLinks(SeleniumUtil.pegarDadosColetadosPeloSelenium());
-        executar.extrairInformacoesDosLinks(conteudoSelenium);*/
+        executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);*/
 
     }
 }

@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 import service.ColetarDadosInfomoney;
 import utils.TestMockUtil;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 public class ColetarDadosInformoneyTest {
     private ColetarDadosInfomoney coletarDadosInfomoney;
 
@@ -19,8 +16,8 @@ public class ColetarDadosInformoneyTest {
     @DisplayName("Deve retornar um set com links")
     void coletarLinks_RetornaSetComLinks_SeBemSucedido() {
 
-        String link = TestMockUtil.retornarLinkValido();
-        Assertions.assertThat(coletarDadosInfomoney.coletarLinks(link))
+        String html = TestMockUtil.retornarHtmlCom3LinksValidos();
+        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html))
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(3);

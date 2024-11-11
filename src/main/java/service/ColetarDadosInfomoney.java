@@ -12,7 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ColetarDadosInfomoney {
-    public Set<String> coletarLinks(String seleniumArquivo){
+    public Set<String> coletarLinksDasNoticias(String seleniumArquivo){
         Set<String> linksList = new LinkedHashSet<>();
         Document doc = Jsoup.parse(seleniumArquivo);
         FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.flex.flex-col.gap-3.p-4")); //div tempo real
@@ -28,11 +28,6 @@ public class ColetarDadosInfomoney {
         String filtro = "https://www.infomoney.com.br/mercados/";
         linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro));
         return linksList;
-    }
-
-    public void extrairInformacoesDosLinks(Set<String> lista){
-        lista.forEach(this::extrairConteudoDasNoticias);
-
     }
 
     public Noticia extrairConteudoDasNoticias(String url){
@@ -68,5 +63,10 @@ public class ColetarDadosInfomoney {
             e.printStackTrace();
         }
         return noticiaConteudos;
+    }
+
+    public void entrarNosLinksEExtrairConteudoDasNoticias(Set<String> lista){
+        lista.forEach(this::extrairConteudoDasNoticias);
+
     }
 }

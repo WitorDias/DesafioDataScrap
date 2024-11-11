@@ -4,7 +4,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class TestMockUtil {
-    public static String retornarLinkValido(){
+    public static String retornarHtmlCom3LinksValidos(){
         return """
         <html>
             <body>
