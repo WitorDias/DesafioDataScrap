@@ -1,3 +1,4 @@
+import model.Noticia;
 import service.ColetarDadosInfomoney;
 import utils.SeleniumUtil;
 
@@ -9,6 +10,7 @@ public class Main {
         ColetarDadosInfomoney executar = new ColetarDadosInfomoney();
         /*Set<String> conteudoSelenium = executar.coletarLinksDasNoticias(SeleniumUtil.pegarDadosColetadosPeloSelenium());
         executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);*/
+        //executar.extrairConteudoDasNoticias("asuhausas");
 
     }
 }

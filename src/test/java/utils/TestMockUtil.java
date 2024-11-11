@@ -21,11 +21,18 @@ public class TestMockUtil {
         """;
     }
 
-    public Set<String> retornarLinksComoSetValidos(){
+    public static String retornarLinkInvalido(){
+        return "//asuhasuhaushaush";
+    }
+    public static Set<String> retornarLinksComoSetValidos(){
         Set<String> linksMock = new LinkedHashSet<>();
         linksMock.add("https://www.infomoney.com.br/mercados/petrobras-mais-do-que-resultado-dividendo-surpreende-e-indica-ha-espaco-para-mais-desempenho-acoes/");
         linksMock.add("https://www.infomoney.com.br/mercados/minerio-de-ferro-cai-antes-de-china-revelar-estimulos-desempenho-acao-vale-vale3/");
         linksMock.add("https://www.infomoney.com.br/mercados/temporada-de-resultados-do-3t24-e-destaque-veja-acoes-e-setores-para-ficar-de-olho/");
         return linksMock;
     }
+    public static String retornarLinkComNoticiaValida(){
+        return "https://www.infomoney.com.br/mercados/petrobras-mais-do-que-resultado-dividendo-surpreende-e-indica-ha-espaco-para-mais-desempenho-acoes/";
+    }
+
 }
