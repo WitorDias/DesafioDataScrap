@@ -54,14 +54,14 @@ public class ColetarDadosInfomoney {
             String autor = conteudo.selectFirst("a.text-base").text();
             String data = conteudo.selectFirst("main p:nth-of-type(2) time").text();
             Element artigo = doc.selectFirst("article.im-article.clear-fix[data-ds-component=article]");
-            String conteudoTexto = artigo.select("p").text();
+            String conteudoArtigo = artigo.select("p").text();
 
             noticiaConteudos = Noticia.builder()
                     .url(url)
                     .titulo(titulo)
                     .subtitulo(subtitulo)
                     .autor(autor)
-                    .conteudo(conteudoTexto)
+                    .conteudo(conteudoArtigo)
                     .dataPublicacao(data)
                     .build();
 
@@ -72,7 +72,6 @@ public class ColetarDadosInfomoney {
         }
         return noticiaConteudos;
     }
-
     public void entrarNosLinksEExtrairConteudoDasNoticias(Set<String> lista){
         lista.forEach(this::extrairConteudoDasNoticias);
 

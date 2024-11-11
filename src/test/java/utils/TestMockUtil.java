@@ -35,4 +35,8 @@ public class TestMockUtil {
         return "https://www.infomoney.com.br/mercados/petrobras-mais-do-que-resultado-dividendo-surpreende-e-indica-ha-espaco-para-mais-desempenho-acoes/";
     }
 
+    public static String retornarPaginaComParametrosNaoMapeados(){
+        return "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-11112024/";
+    }
+
 }

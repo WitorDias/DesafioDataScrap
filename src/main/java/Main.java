@@ -1,4 +1,3 @@
-import model.Noticia;
 import service.ColetarDadosInfomoney;
 import utils.SeleniumUtil;
 
@@ -8,9 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
         ColetarDadosInfomoney executar = new ColetarDadosInfomoney();
-        /*Set<String> conteudoSelenium = executar.coletarLinksDasNoticias(SeleniumUtil.pegarDadosColetadosPeloSelenium());
-        executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);*/
-        //executar.extrairConteudoDasNoticias("asuhausas");
+        Set<String> conteudoSelenium = executar.coletarLinksDasNoticias(SeleniumUtil.pegarDadosColetadosPeloSelenium());
+        executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);
 
     }
 }
