@@ -13,5 +13,9 @@ public class SeleniumUtil {
 }
 
 ```
-
+### Instalação do ChromeDrive
+<p align="justify">Vá ao seu Google Chrome, busque por "Ajuda" em configurações, em seguida, "Sobre o Google Chrome".</p>
+<p> Copie o código da versão do seu navegador e busque por uma versão do "chromedriver" compatível aqui:</p>
+<a href="https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json">https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json</a>
+<p align="justify">Para uma melhor visualização, certifique-se de ter um formatador de Json no navegador.</p>
 
