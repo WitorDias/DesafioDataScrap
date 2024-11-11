@@ -14,19 +14,28 @@ import java.util.Set;
 public class ColetarDadosInfomoney {
     public Set<String> coletarLinksDasNoticias(String seleniumArquivo){
         Set<String> linksList = new LinkedHashSet<>();
-        Document doc = Jsoup.parse(seleniumArquivo);
-        FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.flex.flex-col.gap-3.p-4")); //div tempo real
-        FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.p-4.flex.flex-col.gap-4")); //tabela de ativos
-        Elements blocoNoticias = doc.select("div.px-0");
-        for (Element extrairLinks : blocoNoticias) {
-            Elements links = extrairLinks.select("a");
-            for (Element link : links) {
-                String href = link.attr("href");
-                linksList.add(href);
+
+        if (seleniumArquivo == null || seleniumArquivo.isEmpty()) {
+            return linksList;
+        }
+
+        try{
+            Document doc = Jsoup.parse(seleniumArquivo);
+            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.flex.flex-col.gap-3.p-4")); //Elemento: div tempo real
+            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.p-4.flex.flex-col.gap-4")); //Elemento: tabela de ativos
+            Elements blocoNoticias = doc.select("div.px-0");
+            for (Element extrairLinks : blocoNoticias) {
+                Elements links = extrairLinks.select("a");
+                for (Element link : links) {
+                    String href = link.attr("href");
+                    linksList.add(href);
+                }
             }
+        }catch (Exception e){
+            System.err.println("Erro ao processar os elementos do documento: " + e.getMessage());
         }
         String filtro = "https://www.infomoney.com.br/mercados/";
-        linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro));
+        linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro) || link.contains("ao-vivo") || link.contains("ao vivo"));
         return linksList;
     }
 
@@ -37,7 +46,6 @@ public class ColetarDadosInfomoney {
         try {
             Document doc = Jsoup.connect(url).get();
             Element conteudo = doc.selectFirst("main");
-
             FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.py-2.mt-auto.text-wl-neutral-500.text-xs.text-center")); //remover publicidade antes do artigo
             FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.font-normal.text-base.text-wl-neutral-600.max-w-md.mx-auto")); //remover publicidade depois do artigo
 

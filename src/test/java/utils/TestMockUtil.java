@@ -20,6 +20,7 @@ public class TestMockUtil {
         </html>
         """;
     }
+
     public Set<String> retornarLinksComoSetValidos(){
         Set<String> linksMock = new LinkedHashSet<>();
         linksMock.add("https://www.infomoney.com.br/mercados/petrobras-mais-do-que-resultado-dividendo-surpreende-e-indica-ha-espaco-para-mais-desempenho-acoes/");

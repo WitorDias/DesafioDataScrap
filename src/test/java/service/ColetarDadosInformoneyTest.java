@@ -1,3 +1,5 @@
+package service;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,4 +25,19 @@ public class ColetarDadosInformoneyTest {
                 .hasSize(3);
 
     }
+    @Test
+    @DisplayName("Deve retornar uma lista vazia quando nulo ou vazio")
+    void coletarLinks_RetornaListaVaziaQuandoNuloOuVazio_SeMalSucedido() {
+
+        String html = null;
+        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html))
+                .isNotNull()
+                .isEmpty();
+        String html2 = "";
+        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html2))
+                .isNotNull()
+                .isEmpty();
+
+    }
+
 }
