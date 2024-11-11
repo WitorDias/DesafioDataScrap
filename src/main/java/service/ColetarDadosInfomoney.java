@@ -12,48 +12,49 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ColetarDadosInfomoney {
-    public void obterLinksENoticias(){
+    public Set<String> obterLinksENoticias(String seleniumArquivo){
         Set<String> linksList = new LinkedHashSet<>();
-        String baseUrl = "https://www.infomoney.com.br/mercados/";
-
-        try {
-            Document doc = Jsoup.connect(baseUrl).get();
-            Elements noticiasLinks = doc.select("div.px-0");
-            for (Element newsBlock : noticiasLinks) {
-                Elements links = newsBlock.select("a");
-                for (Element link : links) {
-                    String href = link.attr("href");
-                    linksList.add(href);
-                }
+        Document doc = Jsoup.parse(seleniumArquivo);
+        FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.flex.flex-col.gap-3.p-4")); //div tempo real
+        FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("div.p-4.flex.flex-col.gap-4")); //tabela de ativos
+        Elements blocoNoticias = doc.select("div.px-0");
+        for (Element extrairLinks : blocoNoticias) {
+            Elements links = extrairLinks.select("a");
+            for (Element link : links) {
+                String href = link.attr("href");
+                linksList.add(href);
             }
-
-            String filtro = "https://www.infomoney.com.br/mercados/";
-            linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro));
-            linksList.forEach(this::extrairConteudoDasNoticias);
-
-        }catch (IOException e){
-            e.printStackTrace();
         }
+
+        String filtro = "https://www.infomoney.com.br/mercados/";
+        linksList.removeIf(link -> link.startsWith("https://lp.") || link.equals(filtro));
+        return linksList;
+    }
+
+    public void extrairInformacoesDosLinks(Set<String> lista){
+        lista.forEach(this::extrairConteudoDasNoticias);
 
     }
 
-    public void extrairConteudoDasNoticias(String url){
+    public Noticia extrairConteudoDasNoticias(String url){
+
+        Noticia noticiaConteudos = null;
 
         try {
             Document doc = Jsoup.connect(url).get();
             Element conteudo = doc.selectFirst("main");
 
-            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.py-2.mt-auto.text-wl-neutral-500.text-xs.text-center"));
-            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.font-normal.text-base.text-wl-neutral-600.max-w-md.mx-auto"));
+            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.py-2.mt-auto.text-wl-neutral-500.text-xs.text-center")); //remover publicidade antes do artigo
+            FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.font-normal.text-base.text-wl-neutral-600.max-w-md.mx-auto")); //remover publicidade depois do artigo
 
             String titulo = conteudo.selectFirst("div[data-ds-component='article-title'] h1").text();
             String subtitulo = conteudo.selectFirst("div.text-lg").text();
             String autor = conteudo.selectFirst("a.text-base").text();
-            String data = conteudo.selectFirst("main div:nth-of-type(3) div:nth-of-type(1) div div p:nth-of-type(2) time").text();
+            String data = conteudo.selectFirst("main p:nth-of-type(2) time").text();
             Element artigo = doc.selectFirst("article.im-article.clear-fix[data-ds-component=article]");
             String conteudoTexto = artigo.select("p").text();
 
-            Noticia noticiaConteudos = Noticia.builder()
+            noticiaConteudos = Noticia.builder()
                     .url(url)
                     .titulo(titulo)
                     .subtitulo(subtitulo)
@@ -67,5 +68,6 @@ public class ColetarDadosInfomoney {
         }catch (IOException e){
             e.printStackTrace();
         }
+        return noticiaConteudos;
     }
 }
