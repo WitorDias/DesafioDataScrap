@@ -6,9 +6,9 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        ColetarDadosInfomoney executar = new ColetarDadosInfomoney();
-        Set<String> conteudoSelenium = executar.coletarLinksDasNoticias(SeleniumUtil.pegarDadosColetadosPeloSelenium());
-        executar.entrarNosLinksEExtrairConteudoDasNoticias(conteudoSelenium);
+        ColetarDadosInfomoney exec = new ColetarDadosInfomoney();
+        Set<String> dadosSelenium = exec.coletarLinks(SeleniumUtil.pegarDadosColetadosPeloSelenium());
+        exec.entrarNosLinksEExtrairConteudoDasNoticias(dadosSelenium);
 
     }
 }
