@@ -2,9 +2,11 @@ package service;
 
 import model.Noticia;
 import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import utils.TestMockUtil;
 
 public class ProcessadorDeNoticiasTest {
@@ -39,4 +41,5 @@ public class ProcessadorDeNoticiasTest {
                 .isNotNull()
                 .isInstanceOf(Noticia.class);
     }
+
 }

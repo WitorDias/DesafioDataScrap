@@ -11,6 +11,11 @@ public class ColetarDadosInfomoney {
         this.processarNoticia = new ProcessadorDeNoticias();
     }
 
+    public ColetarDadosInfomoney(ColetorDeLinks linkCollector, ProcessadorDeNoticias noticiaProcessor) {
+        this.coletarLink = linkCollector;
+        this.processarNoticia = noticiaProcessor;
+    }
+
     public Set<String> coletarLinks(String seleniumArquivo) {
         return coletarLink.coletarLinksDasNoticias(seleniumArquivo);
     }

@@ -1,5 +1,9 @@
 package utils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -37,6 +41,44 @@ public class TestMockUtil {
 
     public static String retornarPaginaComParametrosNaoMapeados(){
         return "https://www.infomoney.com.br/mercados/ibovespa-hoje-bolsa-de-valores-ao-vivo-11112024/";
+    }
+
+    public static String retornarConteudoSelenium() {
+        String arquivoPath = "src/main/resources/HtmlDaPaginaPrincipal.html";
+
+        try {
+            Path path = Paths.get(arquivoPath);
+            return Files.readString(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+    public static String retornarPaginaComNoticia1() {
+        String arquivoPath = "src/main/resources/PaginaHtml1.html";
+
+        try {
+            Path path = Paths.get(arquivoPath);
+            return Files.readString(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String retornarLinkNoticia1(){
+        return "https://www.infomoney.com.br/mercados/cemig-seguira-com-privatizacao-se-houver-aprovacao-de-pl-e-pec-na-assembleia-diz-ceo/";
+    }
+    public static String retornarPaginaComNoticia2() {
+        String arquivoPath = "src/main/resources/PaginaHtml2.html";
+
+        try {
+            Path path = Paths.get(arquivoPath);
+            return Files.readString(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 }
