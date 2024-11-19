@@ -7,59 +7,58 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import utils.TestMockUtil;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import static org.mockito.Mockito.*;
+
 public class ColetarDadosInformoneyTest {
     private ColetarDadosInfomoney coletarDadosInfomoney;
+    private ColetorDeLinks linkCollectorMock;
+    private ProcessadorDeNoticias noticiaProcessorMock;
 
     @BeforeEach
     void setUp() {
+        linkCollectorMock = mock(ColetorDeLinks.class);
+        noticiaProcessorMock = mock(ProcessadorDeNoticias.class);
         coletarDadosInfomoney = new ColetarDadosInfomoney();
     }
-    @Test
-    @DisplayName("Deve retornar um set com links")
-    void coletarLinksDasNoticias_RetornaSetComLinks_SeBemSucedido() {
 
-        String html = TestMockUtil.retornarHtmlCom3LinksValidos();
-        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html))
-                .isNotNull()
-                .isNotEmpty()
-                .hasSize(3);
-    }
     @Test
-    @DisplayName("Deve retornar uma lista vazia quando nulo ou vazio")
-    void coletarLinksDasNoticias_RetornaListaVaziaQuandoNuloOuVazio_SeMalSucedido() {
+    @DisplayName("Deve retornar um Set de String se bem sucedido")
+    void coletarLinks_RetornaUmSetDeStrings_SeBemSucedido(){
 
-        String html = null;
-        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html))
+        String htmlDoSelenium = TestMockUtil.retornarConteudoSelenium();
+        Assertions.assertThat(coletarDadosInfomoney.coletarLinks(htmlDoSelenium))
                 .isNotNull()
-                .isEmpty();
-        String html2 = "";
-        Assertions.assertThat(coletarDadosInfomoney.coletarLinksDasNoticias(html2))
-                .isNotNull()
-                .isEmpty();
+                .hasSize(24)
+                .isNotEmpty();
     }
-    @Test
-    @DisplayName("Deve lançar uma IllegalArgumentException quando link invalido")
-    void extrairConteudoDasNoticias_LancaIllegalArgumentException_SeMalSucedido() {
 
-        String html = TestMockUtil.retornarLinkInvalido();
-        Assertions.assertThatExceptionOfType(IllegalArgumentException.class)
-                .isThrownBy(() -> coletarDadosInfomoney.extrairConteudoDasNoticias(html));
-    }
     @Test
-    @DisplayName("Deve lançar uma NullPointerException quando a pagina do link contem elementos invalidos")
-    void extrairConteudoDasNoticias_LancaNullPointerException_SeMalSucedido() {
+    @DisplayName("Deve verificar se o metodo entrarNosLinksEExtrairConteudoDasNoticias interage com extrairConteudoDasNoticias")
+    void entrarNosLinksEExtrairConteudoDasNoticias_ProcessaNoticias_SeBemSucedido(){
 
-        String html = TestMockUtil.retornarPaginaComParametrosNaoMapeados();
-        Assertions.assertThatExceptionOfType(NullPointerException.class)
-                .isThrownBy(() -> coletarDadosInfomoney.extrairConteudoDasNoticias(html));
-    }
-    @Test
-    @DisplayName("Deve retorna um objeto do tipo Noticia")
-    void extrairConteudoDasNoticias_RetornaUmObjetoNoticia_SeBemSucedido (){
-        String noticia = TestMockUtil.retornarLinkComNoticiaValida();
-        Assertions.assertThat(coletarDadosInfomoney.extrairConteudoDasNoticias(noticia))
-                .isNotNull()
-                .isInstanceOf(Noticia.class);
+        String linkNoticia1 = TestMockUtil.retornarLinkNoticia1();
+        coletarDadosInfomoney = new ColetarDadosInfomoney(linkCollectorMock, noticiaProcessorMock);
+
+        Noticia mockNoticia = Noticia.builder()
+                .url(linkNoticia1)
+                .subtitulo("CEO global da Enel reitera intenção de renovar concessão de distribuição em São Paulo")
+                .autor("Reuters")
+                .conteudo("Banco vê riscos fiscais e políticos afetando os...")
+                .dataPublicacao("18/11/2024 12h59")
+                .build();
+
+        Set<String> noticias = new LinkedHashSet<>();
+        noticias.add(linkNoticia1);
+
+        when(noticiaProcessorMock.extrairConteudoDasNoticias(linkNoticia1)).thenReturn(mockNoticia);
+
+        coletarDadosInfomoney.entrarNosLinksEExtrairConteudoDasNoticias(noticias);
+
+        verify(noticiaProcessorMock, times(1)).extrairConteudoDasNoticias(linkNoticia1);
+
     }
 
 }
