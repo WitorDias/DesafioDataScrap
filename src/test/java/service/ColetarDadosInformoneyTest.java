@@ -21,12 +21,13 @@ public class ColetarDadosInformoneyTest {
     void setUp() {
         linkCollectorMock = mock(ColetorDeLinks.class);
         noticiaProcessorMock = mock(ProcessadorDeNoticias.class);
-        coletarDadosInfomoney = new ColetarDadosInfomoney(linkCollectorMock, noticiaProcessorMock);
+        coletarDadosInfomoney = new ColetarDadosInfomoney();
     }
 
     @Test
     @DisplayName("Deve retornar um Set de String se bem sucedido")
     void coletarLinks_RetornaUmSetDeStrings_SeBemSucedido(){
+
         String htmlDoSelenium = TestMockUtil.retornarConteudoSelenium();
         Assertions.assertThat(coletarDadosInfomoney.coletarLinks(htmlDoSelenium))
                 .isNotNull()
@@ -37,7 +38,9 @@ public class ColetarDadosInformoneyTest {
     @Test
     @DisplayName("Deve verificar se o metodo entrarNosLinksEExtrairConteudoDasNoticias interage com extrairConteudoDasNoticias")
     void entrarNosLinksEExtrairConteudoDasNoticias_ProcessaNoticias_SeBemSucedido(){
+
         String linkNoticia1 = TestMockUtil.retornarLinkNoticia1();
+        coletarDadosInfomoney = new ColetarDadosInfomoney(linkCollectorMock, noticiaProcessorMock);
 
         Noticia mockNoticia = Noticia.builder()
                 .url(linkNoticia1)
@@ -54,7 +57,7 @@ public class ColetarDadosInformoneyTest {
 
         coletarDadosInfomoney.entrarNosLinksEExtrairConteudoDasNoticias(noticias);
 
-        verify(noticiaProcessorMock, times(1)).extrairConteudoDasNoticias("https://www.infomoney.com.br/mercados/cemig-seguira-com-privatizacao-se-houver-aprovacao-de-pl-e-pec-na-assembleia-diz-ceo/");
+        verify(noticiaProcessorMock, times(1)).extrairConteudoDasNoticias(linkNoticia1);
 
     }
 

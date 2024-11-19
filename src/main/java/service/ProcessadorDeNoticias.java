@@ -14,7 +14,7 @@ public class ProcessadorDeNoticias {
         Noticia noticiaConteudos = null;
 
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = obterDocumento(url);
             Element conteudo = doc.selectFirst("main");
             FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.py-2.mt-auto.text-wl-neutral-500.text-xs.text-center")); //remover publicidade antes do artigo
             FuncoesUtilitarias.removerElementoSeExistir(doc.selectFirst("p.font-normal.text-base.text-wl-neutral-600.max-w-md.mx-auto")); //remover publicidade depois do artigo
@@ -46,5 +46,9 @@ public class ProcessadorDeNoticias {
             e.printStackTrace();
         }
         return noticiaConteudos;
+    }
+
+    protected Document obterDocumento(String url) throws IOException {
+        return Jsoup.connect(url).get();
     }
 }
